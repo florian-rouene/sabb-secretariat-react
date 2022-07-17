@@ -16,7 +16,7 @@ public class AssociationController {
     private AssociationService associationService;
 
     @GetMapping("/associations")
-    public List<Association> getAssociations(@RequestParam(value = "name", defaultValue = "World") String name) {
+    public List<Association> getAssociations(@RequestParam(value = "name") String name) {
         return associationService.getAllActive();
     }
 }
