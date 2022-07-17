@@ -1,0 +1,17 @@
+package fr.sabb.service.official;
+
+import fr.sabb.data.object.Licensee;
+import fr.sabb.data.object.Match;
+import fr.sabb.data.object.Official;
+import fr.sabb.service.SabbObjectService;
+
+public interface OfficialService  extends SabbObjectService<Official>{
+
+	Official getOfficialFromMatch(Match match);
+	
+	int countLicenseeOfficialNumber(Licensee licensee);
+	
+	void unvalidAllOfficialForCurrentSeason();
+
+	int countScoreOfficial(Licensee licensee);
+}
