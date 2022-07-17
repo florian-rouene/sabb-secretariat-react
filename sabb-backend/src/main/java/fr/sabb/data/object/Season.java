@@ -6,6 +6,11 @@ public class Season  extends SabbObject{
 	private String name;
 	private boolean active;
 	private int referenceYear;
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	/**
 	 * @return the id
 	 */
