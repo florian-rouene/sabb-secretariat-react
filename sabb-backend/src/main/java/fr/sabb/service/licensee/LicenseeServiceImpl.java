@@ -148,7 +148,7 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
 
     @Override
     public List<OfficialLicensee> getAllOfficialLicenseeByTeam(Team team) {
-        return this.getAllByTeam(team).stream().map(this.officialConverter::convertLicensee).collect(Collectors.toList());
+        return this.getAllByTeam(team).stream().map(this.officialConverter::convertLicensee).toList();
     }
 
     @Override

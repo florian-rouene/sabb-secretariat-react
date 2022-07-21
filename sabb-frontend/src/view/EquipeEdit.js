@@ -7,12 +7,8 @@ class EquipeEdit extends Component {
 
     emptyItem = {
         name: '',
-        main: false,
-        active: false,
-        nameFfbb: '',
-        nameFfbbCtc: '',
-        ffbbLocation: '',
-        ffbbLocationBis: '',
+        ctc: false,
+        ffbbUniqueId: '',        
     };
 
     constructor(props) {
@@ -25,7 +21,12 @@ class EquipeEdit extends Component {
     }
 
     async componentDidMount() {
-        if (this.props.match.params.id !== 'new') {
+        if (this.props.match.params.id === 'ffbb') {
+            let item = {...this.state.item};
+            item["ffbbUniqueId"] = this.props.match.params.ffbbId;
+            console.log( this.props);
+            this.setState({item});
+        } else if (this.props.match.params.id !== 'new') {
             const equipe = await (await fetch(`/equipes/${this.props.match.params.id}`)).json();
             this.setState({item: equipe});
         }
@@ -70,9 +71,14 @@ async handleSubmit(event) {
                                onChange={this.handleChange} autoComplete="name"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="main">Email</Label>
-                        <Input type="checkbox" name="main" id="main" value={item.main || ''}
+                        <Label for="main">ctc</Label>
+                        <Input type="checkbox" name="main" id="main" value={item.ctc || ''}
                                onChange={this.handleChange} autoComplete="main"/>
+                    </FormGroup>
+                    <FormGroup>
+                        <Label for="ffbbUniqueId">FFBB code</Label>
+                        <Input type="text" name="ffbbUniqueId" id="ffbbUniqueId" value={item.ffbbUniqueId || ''}
+                               onChange={this.handleChange} autoComplete="ffbbUniqueId"/>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}

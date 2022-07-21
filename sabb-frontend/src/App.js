@@ -5,6 +5,7 @@ import AssociationEdit from './view/AssociationEdit'
 import CategorieList from './view/CategorieList'
 import CategorieEdit from './view/CategorieEdit'
 import EquipeList from './view/EquipeList'
+import FfbbEquipeList from './view/FfbbEquipeList'
 import EquipeEdit from './view/EquipeEdit'
 import SaisonList from './view/SaisonList'
 import SaisonEdit from './view/SaisonEdit'
@@ -21,9 +22,11 @@ class App extends Component {
                 <Route path='/categories' exact={true} component={CategorieList}/>
                 <Route path='/categories/:id' component={CategorieEdit}/>
                 <Route path='/equipes' exact={true} component={EquipeList}/>
+                <Route path='/equipes/:id/:ffbbId' component={EquipeEdit}/>
                 <Route path='/equipes/:id' component={EquipeEdit}/>
                 <Route path='/saisons' exact={true} component={SaisonList}/>
                 <Route path='/saisons/:id' component={SaisonEdit}/>
+                <Route path='/ffbb_equipes' exact={true} component={FfbbEquipeList}/>
             </Switch>
         </Router>
     )
