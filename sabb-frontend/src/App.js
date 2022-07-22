@@ -22,11 +22,11 @@ class App extends Component {
                 <Route path='/categories' exact={true} component={CategorieList}/>
                 <Route path='/categories/:id' component={CategorieEdit}/>
                 <Route path='/equipes' exact={true} component={EquipeList}/>
-                <Route path='/equipes/:id/:ffbbId' component={EquipeEdit}/>
+                <Route path='/equipes/:id/:ffbbId/:name/:asso' component={EquipeEdit}/>
                 <Route path='/equipes/:id' component={EquipeEdit}/>
                 <Route path='/saisons' exact={true} component={SaisonList}/>
                 <Route path='/saisons/:id' component={SaisonEdit}/>
-                <Route path='/ffbb_equipes' exact={true} component={FfbbEquipeList}/>
+                <Route path='/ffbb_equipes/:ffbbName' exact={true} component={FfbbEquipeList}/>
             </Switch>
         </Router>
     )

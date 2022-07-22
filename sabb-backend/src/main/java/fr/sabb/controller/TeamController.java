@@ -1,5 +1,7 @@
 package fr.sabb.controller;
 
+import fr.sabb.data.converter.TeamConverter;
+import fr.sabb.data.dto.TeamDto;
 import fr.sabb.data.object.Team;
 import fr.sabb.exception.ValidationException;
 import fr.sabb.service.team.TeamService;
@@ -18,6 +20,9 @@ public class TeamController {
     @Autowired
     private TeamService teamService;
 
+    @Autowired
+    private TeamConverter teamConverter;
+
     @GetMapping
     public List<Team> getTeams() {
         return teamService.getAllActiveForCurrentSeason();
@@ -29,19 +34,17 @@ public class TeamController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateTeam(@PathVariable int id, @RequestBody Team team) throws ValidationException {
+    public ResponseEntity updateTeam(@PathVariable int id, @RequestBody TeamDto team) throws ValidationException {
         Team currentTeam = teamService.getById(id).orElseThrow(RuntimeException::new);
-        currentTeam.setName(team.getName());
-        teamService.updateOrInsert(team);
+       // teamService.updateOrInsert(team);
 
         return ResponseEntity.ok(currentTeam);
     }
 
     @PostMapping
-    public ResponseEntity createTeam(@RequestBody Team team) throws URISyntaxException, ValidationException {
-        team.setActive(true);
-        teamService.updateOrInsert(team);
-        return ResponseEntity.created(new URI("/equipes/" + team.getId())).body(team);
+    public ResponseEntity createTeam(@RequestBody TeamDto teamDto) throws URISyntaxException, ValidationException {
+        teamService.updateOrInsert(this.teamConverter.convertTeamDto(teamDto));
+        return ResponseEntity.created(new URI("/equipes/" + teamDto.getId())).body(teamDto);
     }
 
     @DeleteMapping("/{id}")

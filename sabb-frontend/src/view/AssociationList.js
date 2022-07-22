@@ -40,6 +40,7 @@ render() {
                 <ButtonGroup>
                     <Button size="sm" color="primary" tag={Link} to={"/associations/" + association.id}>Edit</Button>
                     <Button size="sm" color="danger" onClick={() => this.remove(association.id)}>Delete</Button>
+                    <Button color="link"><Link to={"/ffbb_equipes/" + association.nameFfbb}>Equipe FFBB</Link></Button>
                 </ButtonGroup>
             </td>
         </tr>
@@ -53,7 +54,7 @@ render() {
                     <Button color="success" tag={Link} to="/associations/new">Add association</Button>
                 </div>
                 <h3>Associations</h3>
-                <Table className="mt-4">
+                <Table className="mt-3">
                     <thead>
                     <tr>
                         <th width="30%">Name</th>

@@ -11,7 +11,7 @@ class FfbbEquipeList extends Component {
 }
 
 componentDidMount() {
-    fetch('/ffbb_equipes/SAINT ANDRE BASKET BALL')
+    fetch(`/ffbb_equipes/${this.props.match.params.ffbbName}`)
         .then(response => response.json())
         .then(data => this.setState({ffbbEquipes: data}));
 }
@@ -26,7 +26,7 @@ render() {
             <td>{equipe.poule}</td>
             <td>
                 <ButtonGroup>
-                    <Button size="sm" color="primary" tag={Link} to={"/equipes/ffbb/" + equipe.ffbbUniqueId}>Bind</Button>                    
+                    <Button size="sm" color="primary" tag={Link} to={`/equipes/ffbb/${equipe.ffbbUniqueId}/${equipe.name}/${this.props.match.params.ffbbName}`}>Bind</Button>                    
                 </ButtonGroup>
             </td>
         </tr>

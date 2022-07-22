@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,6 +25,11 @@ public class AssociationServiceImpl extends SabbObjectServiceImpl<Association> i
 	@Override
 	public List<Association> getAllActive() {
 		return getAll().stream().filter(Association::isActive).collect(Collectors.toList());
+	}
+
+	@Override
+	public Optional<Association> getByFfbbName(String name) {
+		return this.getAll().stream().filter(s -> s.getNameFfbb().equals(name)).findFirst();
 	}
 
 }
