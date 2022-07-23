@@ -3,11 +3,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 
-class SaisonEdit extends Component {
+class SubCategorieEdit extends Component {
 
     emptyItem = {
-        name: '',
-        referenceYear: 0,        
+        name: '',        
+        sex: '',
     };
 
     constructor(props) {
@@ -21,8 +21,8 @@ class SaisonEdit extends Component {
 
     async componentDidMount() {
         if (this.props.match.params.id !== 'new') {
-            const saison = await (await fetch(`/saisons/${this.props.match.params.id}`)).json();
-            this.setState({item: saison});
+            const subcategorie = await (await fetch(`/sub_categories/${this.props.match.params.id}`)).json();
+            this.setState({item: subcategorie});
         }
     }
 
@@ -39,7 +39,7 @@ async handleSubmit(event) {
     event.preventDefault();
     const {item} = this.state;
 
-    await fetch('/saisons' + (item.id ? '/' + item.id : ''), {
+    await fetch('/sub_categories' + (item.id ? '/' + item.id : ''), {
         method: (item.id) ? 'PUT' : 'POST',
         headers: {
             'Accept': 'application/json',
@@ -47,12 +47,12 @@ async handleSubmit(event) {
         },
         body: JSON.stringify(item),
     });
-    this.props.history.push('/saisons');
+    this.props.history.push('/sub_categories');
 }
 
     render() {
         const {item} = this.state;
-        const title = <h2>{item.id ? 'Edit Saison' : 'Add Saison'}</h2>;
+        const title = <h2>{item.id ? 'Edit SubCategorie' : 'Add SubCategorie'}</h2>;
 
         return <div>
             <AppNavbar/>
@@ -65,13 +65,13 @@ async handleSubmit(event) {
                                onChange={this.handleChange} autoComplete="name"/>
                     </FormGroup>
                     <FormGroup>
-                        <Label for="referenceYear">Année de référence</Label>
-                        <Input type="text" name="referenceYear" id="referenceYear" value={item.referenceYear || ''}
-                               onChange={this.handleChange} autoComplete="referenceYear"/>
+                        <Label for="sex">Sexe</Label>
+                        <Input type="text" name="sex" id="sex" value={item.sex || ''}
+                               onChange={this.handleChange} autoComplete="sex"/>
                     </FormGroup>
                     <FormGroup>
                         <Button color="primary" type="submit">Save</Button>{' '}
-                        <Button color="secondary" tag={Link} to="/saisons">Cancel</Button>
+                        <Button color="secondary" tag={Link} to="/sub_categories">Cancel</Button>
                     </FormGroup>
                 </Form>
             </Container>
@@ -79,4 +79,4 @@ async handleSubmit(event) {
     }
 }
 
-export default withRouter(SaisonEdit);
+export default withRouter(SubCategorieEdit);

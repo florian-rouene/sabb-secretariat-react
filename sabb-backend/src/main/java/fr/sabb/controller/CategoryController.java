@@ -20,7 +20,7 @@ public class CategoryController {
 
     @GetMapping
     public List<Category> getCategorys() {
-        return categoryService.getAllActive();
+        return categoryService.getAll();
     }
 
     @GetMapping("/{id}")
@@ -40,7 +40,6 @@ public class CategoryController {
 
     @PostMapping
     public ResponseEntity createCategory(@RequestBody Category category) throws URISyntaxException, ValidationException {
-        category.setActive(true);
         categoryService.updateOrInsert(category);
         return ResponseEntity.created(new URI("/categories/" + category.getId())).body(category);
     }

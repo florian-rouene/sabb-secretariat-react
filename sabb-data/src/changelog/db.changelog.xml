@@ -1,0 +1,402 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+	xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+	<changeSet author="FRO" id="create_schema_sabb">
+		<sql dbms="postgresql" endDelimiter=";">
+			CREATE SCHEMA sabb
+		</sql>
+	</changeSet>
+
+	<changeSet id="create_table_category" author="FRO">
+		<createTable schemaName="sabb" tableName="category">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="create_table_association" author="FRO">
+		<createTable schemaName="sabb" tableName="association">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="main" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="create_table_team" author="FRO">
+		<createTable schemaName="sabb" tableName="team">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="name" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+			<column name="id_association" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="id_category" type="int">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_association"
+			baseTableName="team" constraintName="fk_team_association"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="association" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_category"
+			baseTableName="team" constraintName="fk_team_category"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="category" />
+	</changeSet>
+
+	<changeSet id="create_table_match" author="FRO">
+		<createTable schemaName="sabb" tableName="match">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_team" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="match_date" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+			<column name="opponent" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_team"
+			baseTableName="match" constraintName="fk_match_team"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="team" />
+	</changeSet>
+
+	<changeSet id="add_column_match_home_id_ffbb" author="FRO">
+		<addColumn schemaName="sabb" tableName="match">
+			<column name="id_ffbb" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="home" type="boolean" defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="add_column_team_ffbb_unique_id" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="ffbb_unique_id" type="varchar(50)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="add_unique_constraint_match" author="FRO">
+		<addUniqueConstraint
+			columnNames="id_ffbb, id_team" schemaName="sabb" tableName="match" />
+	</changeSet>
+
+	<changeSet id="add_column_association_name_ffbb" author="FRO">
+		<addColumn schemaName="sabb" tableName="association">
+			<column name="name_ffbb" type="varchar(150)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="create_table_licensee" author="FRO">
+		<createTable schemaName="sabb" tableName="licensee">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_team" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="id_category" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="firstname" type="varchar(150)">
+				<constraints nullable="false" />
+			</column>
+			<column name="mail" type="varchar(150)">
+			</column>
+			<column name="phone" type="varchar(10)">
+			</column>
+			<column name="adress" type="varchar(300)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_team"
+			baseTableName="licensee" constraintName="fk_licensee_team"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="team" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_category"
+			baseTableName="licensee" constraintName="fk_licensee_category"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="category" />
+	</changeSet>
+
+	<changeSet id="drop_constraint_not_null_licensee_team"
+		author="FRO">
+		<dropNotNullConstraint schemaName="sabb"
+			tableName="licensee" columnName="id_team" />
+	</changeSet>
+
+	<changeSet id="add_column_category_autobind" author="FRO">
+		<addColumn schemaName="sabb" tableName="category">
+			<column name="autobind" type="boolean"
+				defaultValueBoolean="false">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="add_column_team_sort" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="sort" type="int" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="add_column_licensee_num" author="FRO">
+		<addColumn schemaName="sabb" tableName="licensee">
+			<column name="num_licensee" type="varchar(12)" />
+		</addColumn>
+		<addUniqueConstraint columnNames="num_licensee"
+			schemaName="sabb" tableName="licensee" />
+	</changeSet>
+
+	<changeSet id="add_columns_licensee_sex_birth" author="FRO">
+		<addColumn schemaName="sabb" tableName="licensee">
+			<column name="sex" type="varchar(1)">
+				<constraints nullable="false" />
+			</column>
+			<column name="date_of_birth" type="timestamp">
+				<constraints nullable="false" />
+			</column>
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="add_column_sex" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="sex" type="varchar(1)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="create_table_sub_category" author="FRO">
+		<createTable schemaName="sabb" tableName="sub_category">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_category" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="name" type="varchar(10)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_category"
+			baseTableName="sub_category"
+			constraintName="fk_sub_category_category"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="category" />
+	</changeSet>
+
+	<changeSet id="add_sub_category_column_sex" author="FRO">
+		<addColumn schemaName="sabb" tableName="sub_category">
+			<column name="sex" type="varchar(1)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="create_table_transport" author="FRO">
+		<createTable schemaName="sabb" tableName="transport">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_match" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="id_licensee_1" type="int" />
+			<column name="id_licensee_2" type="int" />
+			<column name="id_licensee_3" type="int" />
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_match"
+			baseTableName="transport" constraintName="fk_transport_match"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="match" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_1"
+			baseTableName="transport" constraintName="fk_transport_licensee_1"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_2"
+			baseTableName="transport" constraintName="fk_transport_licensee_2"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_3"
+			baseTableName="transport" constraintName="fk_transport_licensee_3"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />
+	</changeSet>
+	
+	<changeSet id="add_team_ctc_excel_ref" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="ctc" type="boolean"
+				defaultValueBoolean="false" />
+			<column name="excel_reference" type="varchar(3)" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="add_team_ctc_excel_ref_bis" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="excel_reference_ctc" type="varchar(3)" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="create_table_official" author="FRO">
+		<createTable schemaName="sabb" tableName="official">
+			<column name="id" type="int" autoIncrement="true">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="id_match" type="int">
+				<constraints nullable="false" />
+			</column>
+			<column name="id_team_table" type="int" />
+			<column name="id_team_referee" type="int" />			
+		</createTable>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_match"
+			baseTableName="official" constraintName="fk_official_match"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="match" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_team_table"
+			baseTableName="official" constraintName="fk_official_team_table"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="team" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_team_referee"
+			baseTableName="official" constraintName="fk_official_team_referee"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="team" />		
+	</changeSet>
+	
+	<changeSet id="add_column_association_name_ffbb_ctc" author="FRO">
+		<addColumn schemaName="sabb" tableName="association">
+			<column name="name_ffbb_ctc" type="varchar(150)" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="add_column_licensee_official" author="FRO">
+		<addColumn schemaName="sabb" tableName="official">
+			<column name="id_licensee_table_1" type="int" />
+			<column name="id_licensee_table_2" type="int" />
+			<column name="id_licensee_referee_1" type="int" />
+			<column name="id_licensee_referee_2" type="int" />			
+		</addColumn>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_table_1"
+			baseTableName="official" constraintName="fk_official_licensee_table_1"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_table_2"
+			baseTableName="official" constraintName="fk_official_licensee_table_2"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />	
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_referee_1"
+			baseTableName="official" constraintName="fk_official_licensee_referee_1"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_licensee_referee_2"
+			baseTableName="official" constraintName="fk_official_licensee_referee_2"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="licensee" />	
+	</changeSet>
+
+	<changeSet id="licensee_drop_not_null_date_of_birth" author="FRO">
+		<dropNotNullConstraint schemaName="sabb" tableName="licensee" columnName="date_of_birth"/>
+	</changeSet>
+	
+	<changeSet id="licensee_add_column_association" author="FRO">
+		<addColumn schemaName="sabb" tableName="licensee">
+			<column name="id_association" type="int" />
+		</addColumn>
+		<addForeignKeyConstraint
+			baseTableSchemaName="sabb" baseColumnNames="id_association"
+			baseTableName="licensee" constraintName="fk_licensee_association"
+			referencedTableSchemaName="sabb" referencedColumnNames="id"
+			referencedTableName="association" />
+	</changeSet>
+	
+	<changeSet id="add_team_referee_replacment_label" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="referee_replacment_label" type="varchar(50)"/>
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="add_team_has_official_referee" author="FRO">
+		<addColumn schemaName="sabb" tableName="team">
+			<column name="has_official_referee" type="boolean"
+				defaultValueBoolean="false" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="drop_nullable_constraint_match" author="FRO">
+		<dropNotNullConstraint schemaName="sabb" tableName="transport" columnName="id_match" columnDataType="int"/>
+		<dropNotNullConstraint schemaName="sabb" tableName="official" columnName="id_match" columnDataType="int"/>
+	</changeSet>
+	
+		<changeSet id="add_association_ffbb_location" author="FRO">
+		<addColumn schemaName="sabb" tableName="association">
+			<column name="ffbb_location" type="varchar(25)" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="add_match_location_switched" author="FRO">
+		<addColumn schemaName="sabb" tableName="match">
+			<column name="location_switched" type="boolean"
+				defaultValueBoolean="false" />
+		</addColumn>
+	</changeSet>
+	
+	<changeSet id="add_association_ffbb_location_bis" author="FRO">
+		<addColumn schemaName="sabb" tableName="association">
+			<column name="ffbb_location_bis" type="varchar(25)" />
+		</addColumn>
+	</changeSet>
+
+	<changeSet id="grant_schema" author="FRO">
+		<sql dbms="postgresql" endDelimiter=";">
+			GRANT USAGE ON SCHEMA sabb TO sabb_usr;
+			GRANT SELECT, INSERT, UPDATE, DELETE, TRUNCATE ON ALL TABLES IN SCHEMA sabb TO sabb_usr;
+		</sql>
+	</changeSet>
+
+	<changeSet id="grant_sequence" author="FRO">
+		<sql dbms="postgresql" endDelimiter=";">
+			GRANT  ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA sabb TO sabb_usr;
+		</sql>
+	</changeSet>
+	
+</databaseChangeLog>

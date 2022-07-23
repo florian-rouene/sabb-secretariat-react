@@ -44,7 +44,6 @@ public class AssociationController {
 
     @PostMapping
     public ResponseEntity createAssociation(@RequestBody Association association) throws URISyntaxException, ValidationException {
-        association.setActive(true);
         associationService.updateOrInsert(association);
         return ResponseEntity.created(new URI("/associations/" + association.getId())).body(association);
     }

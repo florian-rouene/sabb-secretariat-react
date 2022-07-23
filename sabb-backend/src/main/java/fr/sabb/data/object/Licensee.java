@@ -16,7 +16,6 @@ public class Licensee extends SabbObject {
 	private Timestamp dateOfBirth;
 	private String sex;
 	private Association association;
-	private Season season;
 
 	/**
 	 * @return the id
@@ -202,26 +201,9 @@ public class Licensee extends SabbObject {
 		this.association = association;
 	}
 	
-	/**
-	 * @return the season
-	 */
-	public Season getSeason() {
-		return season;
-	}
-
-	/**
-	 * @param season the season to set
-	 */
-	public void setSeason(Season season) {
-		this.season = season;
-	}
 
 	public boolean isMainAssociation() {
 		return association != null && association.isMain(); 
-	}
-	
-	public boolean isSeasonActif() {
-		return season != null && season.isActive();
 	}
 	
 	public String toStringForListingAG(int count, boolean isParent) {

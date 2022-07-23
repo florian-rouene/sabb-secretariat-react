@@ -27,14 +27,9 @@ public class CategoryServiceImpl extends SabbObjectServiceImpl<Category> impleme
 	}
 
 	@Override
-	public List<Category> getAllActive() {
-		return getAll().stream().filter(Category::isActive).collect(Collectors.toList());
-	}
-
-	@Override
 	public Category getCategoryBySubCategoryName(String subCategoryName, String sex) {
 		return this.subCategoryService.getAll().stream()
-				.filter(c -> c.getName().equals(subCategoryName) && c.getCategory().isActive())
+				.filter(c -> c.getName().equals(subCategoryName))
 				.filter(s -> this.filterBySex(s, sex))
 				.map(SubCategory::getCategory).findFirst().orElse(null);
 	}

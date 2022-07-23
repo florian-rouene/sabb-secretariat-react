@@ -11,8 +11,8 @@ class Home extends Component {
                 <AppNavbar/>
                 <Container fluid>
                     <Button color="link"><Link to="/associations">Association</Link></Button>
-                    <Button color="link"><Link to="/saisons">Saison</Link></Button>
                     <Button color="link"><Link to="/categories">Categorie</Link></Button>
+                    <Button color="link"><Link to="/sub_categories">Sous-Categorie</Link></Button>
                     <Button color="link"><Link to="/equipes">Equipe</Link></Button>                   
                 </Container>
             </div>

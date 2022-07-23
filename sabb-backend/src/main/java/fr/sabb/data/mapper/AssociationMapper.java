@@ -17,12 +17,12 @@ public interface AssociationMapper extends SabbMapper<Association> {
 	})
 	List<Association> getAll();
 	
-	@Insert("INSERT INTO sabb.association(name,main,active,name_ffbb, name_ffbb_ctc, ffbb_location, ffbb_location_bis) VAlUES(#{name},#{main}, #{active}, #{nameFfbb}, #{nameFfbbCtc}, #{ffbbLocation}, #{ffbbLocationBis})")
+	@Insert("INSERT INTO sabb.association(name,main,name_ffbb, name_ffbb_ctc, ffbb_location, ffbb_location_bis) VAlUES(#{name},#{main}, #{nameFfbb}, #{nameFfbbCtc}, #{ffbbLocation}, #{ffbbLocationBis})")
 	void insert(Association association);
 	
 	@Delete("DELETE FROM sabb.association WHERE id=#{id}")
 	void delete(Association association);
 	
-	@Update("UPDATE sabb.association SET name=#{name}, main=#{main}, active=#{active}, name_ffbb=#{nameFfbb}, name_ffbb_ctc=#{nameFfbbCtc}, ffbb_location=#{ffbbLocation}, ffbb_location_bis=#{ffbbLocationBis} WHERE id=#{id}")
+	@Update("UPDATE sabb.association SET name=#{name}, main=#{main}, name_ffbb=#{nameFfbb}, name_ffbb_ctc=#{nameFfbbCtc}, ffbb_location=#{ffbbLocation}, ffbb_location_bis=#{ffbbLocationBis} WHERE id=#{id}")
 	void update(Association association);
 }

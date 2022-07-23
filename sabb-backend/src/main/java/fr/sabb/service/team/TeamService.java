@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface TeamService extends SabbObjectService<Team>{
 
-	List<Team> getAllActiveForCurrentSeason();
-
 	Team getFirstTeamForCategoryAndSex(int idCategory, String sex);
 
 }

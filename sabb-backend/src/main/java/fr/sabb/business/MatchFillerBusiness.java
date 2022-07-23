@@ -48,7 +48,7 @@ public class MatchFillerBusiness {
     }
 
     public void reloadGameFromFFBBForAllTeam() throws Exception {
-        teamService.getAllActiveForCurrentSeason().stream().filter(m -> Objects.nonNull(m.getFfbbUniqueId())).forEach(t -> {
+        teamService.getAll().stream().filter(m -> Objects.nonNull(m.getFfbbUniqueId())).forEach(t -> {
             try {
                 reloadGameFromFFBB(t);
             } catch (Exception e) {

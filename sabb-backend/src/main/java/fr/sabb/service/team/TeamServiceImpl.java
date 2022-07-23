@@ -5,7 +5,6 @@ import fr.sabb.data.mapper.SabbMapper;
 import fr.sabb.data.mapper.TeamMapper;
 import fr.sabb.data.object.Team;
 import fr.sabb.service.SabbObjectServiceImpl;
-import fr.sabb.service.season.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,9 +18,6 @@ public class TeamServiceImpl extends SabbObjectServiceImpl<Team> implements Team
 	@Autowired
 	TeamMapper mapper;
 
-	@Autowired
-	private SeasonService seasonService;
-
 	@Override
 	public SabbMapper<Team> getMapper() {
 		return mapper;
@@ -29,22 +25,15 @@ public class TeamServiceImpl extends SabbObjectServiceImpl<Team> implements Team
 
 	@Override
 	public void updateOrInsert(Team team) throws ValidationException {
-		if (team.getCategory() == null || team.getAssociation() == null || team.getSeason() == null) {
+		if (team.getCategory() == null || team.getAssociation() == null) {
 			throw new ValidationException();
 		}
 		super.updateOrInsert(team);
 	}
 
 	@Override
-	public List<Team> getAllActiveForCurrentSeason() {
-		return this.getAll().stream().filter(Team::isActive)
-				.filter(t -> t.getSeason().getId() == seasonService.getCurrentSeason().getId())
-				.collect(Collectors.toList());
-	}
-
-	@Override
 	public Team getFirstTeamForCategoryAndSex(int idCategory, String sex) {
-		return this.getAllActiveForCurrentSeason().stream().filter(t -> t.getCategory().getId() == idCategory)
+		return this.getAll().stream().filter(t -> t.getCategory().getId() == idCategory)
 				.filter(t -> t.getSex().equals(sex)).min(Comparator.comparing(Team::getSort))
 				.orElse(null);
 	}

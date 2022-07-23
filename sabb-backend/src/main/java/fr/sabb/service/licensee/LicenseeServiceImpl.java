@@ -6,7 +6,6 @@ import fr.sabb.data.mapper.SabbMapper;
 import fr.sabb.data.object.*;
 import fr.sabb.service.SabbObjectServiceImpl;
 import fr.sabb.service.category.CategoryService;
-import fr.sabb.service.season.SeasonService;
 import fr.sabb.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,9 +34,6 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
 
     @Autowired
     private OfficialConverter officialConverter;
-
-    @Autowired
-    private SeasonService seasonService;
 
     @Override
     public SabbMapper<Licensee> getMapper() {
@@ -68,14 +64,13 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
         licensee.setTeam(getTeam(licensee.getCategory(), licensee.getSex(), association, licensee.getNumLicensee()));
         licensee.setDateOfBirth(getDateOfBirth(fields[7]));
         licensee.setAssociation(association);
-        licensee.setSeason(seasonService.getCurrentSeason());
         this.upsert(licensee);
         System.out.println("Upsert du licencié : " + licensee);
     }
 
     private Team getTeam(Category category, String sex, Association association, String numLicence) {
         if (category != null && association.isMain() && category.isAutobind()) {
-            Licensee oldLicensee = getAll().stream().filter(l -> l.getNumLicensee().equals(numLicence)).filter(l -> l.getSeason().isActive()).findFirst().orElse(null);
+            Licensee oldLicensee = getAll().stream().filter(l -> l.getNumLicensee().equals(numLicence)).findFirst().orElse(null);
             if (oldLicensee == null || oldLicensee.getTeam() == null) {
                 return teamService.getFirstTeamForCategoryAndSex(category.getId(), sex);
             }
@@ -134,9 +129,6 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
 
     @Override
     public void updateOrInsert(Licensee licensee) throws ValidationException {
-        if (licensee.getSeason() == null) {
-            licensee.setSeason(seasonService.getCurrentSeason());
-        }
         if (licensee.getTeam() != null && licensee.getCategory() == null) {
             licensee.setCategory(licensee.getTeam().getCategory());
         }
@@ -157,7 +149,6 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
                 .filter(Objects::nonNull)
                 .filter(l -> Objects.nonNull(l.getAssociation()))
                 .filter(l -> l.getAssociation().isMain())
-                .filter(l -> l.getSeason().isActive())
                 .sorted(Comparator.comparing(Licensee::getName))
                 .map(this.officialConverter::convertLicensee)
                 .collect(Collectors.toList());

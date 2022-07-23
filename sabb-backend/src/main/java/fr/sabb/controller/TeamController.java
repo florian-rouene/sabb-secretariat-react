@@ -25,7 +25,7 @@ public class TeamController {
 
     @GetMapping
     public List<Team> getTeams() {
-        return teamService.getAllActiveForCurrentSeason();
+        return teamService.getAll();
     }
 
     @GetMapping("/{id}")

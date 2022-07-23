@@ -29,9 +29,6 @@ public interface SabbMapper<T extends SabbObject> {
 			@Result(property = "hasOfficialReferee", column = "has_official_referee")})
 	Team getTeam(int idTeam);
 	
-	@Select("SELECT * FROM sabb.season WHERE id=#{idSeason}")
-	Season getSeason(int idSeason);
-	
 	@Select("SELECT * FROM sabb.category WHERE id=#{idCategory}")
 	Category getCategory(int idCategory);
 	

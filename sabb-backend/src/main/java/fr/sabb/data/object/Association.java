@@ -5,7 +5,6 @@ public class Association extends SabbObject {
 	private int id;
 	private String name;
 	private boolean main;
-	private boolean active;
 	private String nameFfbb;
 	private String nameFfbbCtc;
 	private String ffbbLocation;
@@ -68,21 +67,6 @@ public class Association extends SabbObject {
 	 */
 	public void setMain(boolean main) {
 		this.main = main;
-	}
-
-	/**
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-
-	/**
-	 * @param active
-	 *            the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
 	}
 
 	public String toString() {

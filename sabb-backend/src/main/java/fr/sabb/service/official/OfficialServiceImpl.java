@@ -6,9 +6,7 @@ import fr.sabb.data.mapper.SabbMapper;
 import fr.sabb.data.object.Licensee;
 import fr.sabb.data.object.Match;
 import fr.sabb.data.object.Official;
-import fr.sabb.data.object.Season;
 import fr.sabb.service.SabbObjectServiceImpl;
-import fr.sabb.service.season.SeasonService;
 import fr.sabb.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +14,6 @@ import org.springframework.stereotype.Service;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -24,9 +21,6 @@ public class OfficialServiceImpl extends SabbObjectServiceImpl<Official> impleme
 
     @Autowired
     private OfficialMapper mapper;
-
-    @Autowired
-    private SeasonService seasonService;
 
     @Override
     public SabbMapper<Official> getMapper() {
@@ -59,13 +53,6 @@ public class OfficialServiceImpl extends SabbObjectServiceImpl<Official> impleme
 
     private boolean isSameLicensee(Licensee officialLicensee, Licensee licensee) {
         return officialLicensee != null && officialLicensee.getId() == licensee.getId();
-    }
-
-    @Override
-    public void unvalidAllOfficialForCurrentSeason() {
-        Season currentSeason = this.seasonService.getCurrentSeason();
-        this.getAll().stream().filter(o -> o.getMatch().getTeam().getSeason().equals(currentSeason))
-                .forEach(this::unvalidOfficial);
     }
 
     @Override

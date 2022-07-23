@@ -7,6 +7,7 @@ import fr.sabb.service.SabbObjectServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,7 +25,7 @@ public class AssociationServiceImpl extends SabbObjectServiceImpl<Association> i
 
 	@Override
 	public List<Association> getAllActive() {
-		return getAll().stream().filter(Association::isActive).collect(Collectors.toList());
+		return this.getAll();
 	}
 
 	@Override

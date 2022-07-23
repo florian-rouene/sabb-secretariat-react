@@ -3,43 +3,43 @@ import { Button, ButtonGroup, Container, Table } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import { Link } from 'react-router-dom';
 
-class SaisonList extends Component {
+class SubCategorieList extends Component {
   constructor(props) {
     super(props);
-    this.state = {saisons: []};
+    this.state = {subcategories: []};
     this.remove = this.remove.bind(this);
 }
 
 componentDidMount() {
-    fetch('/saisons')
+    fetch('/sub_categories')
         .then(response => response.json())
-        .then(data => this.setState({saisons: data}));
+        .then(data => this.setState({subcategories: data}));
 }
 
 async remove(id) {
-    await fetch(`/saisons/${id}`, {
+    await fetch(`/sub_categories/${id}`, {
         method: 'DELETE',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         }
     }).then(() => {
-        let updatedSaisons = [...this.state.saisons].filter(i => i.id !== id);
-        this.setState({saisons: updatedSaisons});
+        let updatedSubCategories = [...this.state.subcategories].filter(i => i.id !== id);
+        this.setState({subcategories: updatedSubCategories});
     });
 }
 
 render() {
-    const {saisons} = this.state;
+    const {subcategories} = this.state;
 
-    const saisonsList = saisons.map(saison => {
-        return <tr key={saison.id}>
-            <td style={{whiteSpace: 'nowrap'}}>{saison.name}</td>
-            <td>{saison.referenceYear}</td>
+    const subcategoriesList = subcategories.map(subcategorie => {
+        return <tr key={subcategorie.id}>
+            <td style={{whiteSpace: 'nowrap'}}>{subcategorie.name}</td>
+            <td>{subcategorie.sex}</td>
             <td>
                 <ButtonGroup>
-                    <Button size="sm" color="primary" tag={Link} to={"/saisons/" + saison.id}>Edit</Button>
-                    <Button size="sm" color="danger" onClick={() => this.remove(saison.id)}>Delete</Button>
+                    <Button size="sm" color="primary" tag={Link} to={"/sub_categories/" + subcategorie.id}>Edit</Button>
+                    <Button size="sm" color="danger" onClick={() => this.remove(subcategorie.id)}>Delete</Button>
                 </ButtonGroup>
             </td>
         </tr>
@@ -50,19 +50,19 @@ render() {
             <AppNavbar/>
             <Container fluid>
                 <div className="float-right">
-                    <Button color="success" tag={Link} to="/saisons/new">Add saison</Button>
+                    <Button color="success" tag={Link} to="/sub_categories/new">Add subcategorie</Button>
                 </div>
-                <h3>Saisons</h3>
+                <h3>SubCategories</h3>
                 <Table className="mt-4">
                     <thead>
                     <tr>
                         <th width="30%">Name</th>
-                        <th width="30%">Année de référence</th>
+                        <th width="30%">Sexe</th>
                         <th width="40%">Actions</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {saisonsList}
+                    {subcategoriesList}
                     </tbody>
                 </Table>
             </Container>
@@ -71,4 +71,4 @@ render() {
 }
 }
 
-export default SaisonList;
+export default SubCategorieList;

@@ -21,6 +21,7 @@ class AssociationEdit extends Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     }
 
     async componentDidMount() {
@@ -36,6 +37,14 @@ class AssociationEdit extends Component {
         const name = target.name;
         let item = {...this.state.item};
         item[name] = value;
+        this.setState({item});
+    }
+
+    handleCheckboxChange(event) {
+        const target = event.target;        
+        const name = target.name;
+        let item = {...this.state.item};
+        item[name] = !item[name];
         this.setState({item});
     }
 
@@ -71,7 +80,7 @@ async handleSubmit(event) {
                     <FormGroup>
                         <Label for="main">Principale</Label>
                         <Input type="checkbox" name="main" id="main" checked={item.main || false}
-                               onChange={this.handleChange} autoComplete="main"/>
+                               onChange={this.handleCheckboxChange} autoComplete="main"/>
                     </FormGroup>
                     <FormGroup>
                         <Label for="nameFfbb">Nom FFBB</Label>

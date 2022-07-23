@@ -78,7 +78,7 @@ public class MatchServiceImpl extends SabbObjectServiceImpl<Match> implements Ma
 
 	@Override
 	public Stream<Match> getAllHomeMainMatchForCurrentSeason() {
-		return this.getAll().stream().filter(m -> m.getTeam().getSeason().isActive()).filter(Match::isHome).filter(this::playInMainAssociation);
+		return this.getAll().stream().filter(Match::isHome).filter(this::playInMainAssociation);
 	}
 	
 	private boolean playInMainAssociation(Match match) {

@@ -7,7 +7,6 @@ public class Team extends SabbObject {
 	private String name;
 	private Association association;
 	private Category category;
-	private Season season;
 	private boolean active;
 	private String ffbbUniqueId;
 	private int sort;
@@ -66,18 +65,6 @@ public class Team extends SabbObject {
 	 */
 	public void setCategory(Category category) {
 		this.category = category;
-	}
-	/**
-	 * @return the season
-	 */
-	public Season getSeason() {
-		return season;
-	}
-	/**
-	 * @param season the season to set
-	 */
-	public void setSeason(Season season) {
-		this.season = season;
 	}
 	/**
 	 * @return the active

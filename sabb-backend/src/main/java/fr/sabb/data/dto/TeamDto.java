@@ -1,8 +1,5 @@
 package fr.sabb.data.dto;
 
-import fr.sabb.data.object.Association;
-import fr.sabb.data.object.Category;
-import fr.sabb.data.object.Season;
 import fr.sabb.data.object.Team;
 
 public class TeamDto extends Team {
