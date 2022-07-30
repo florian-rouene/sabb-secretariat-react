@@ -1,5 +1,7 @@
 package fr.sabb.service.team;
 
+import fr.sabb.data.converter.TeamConverter;
+import fr.sabb.data.dto.TeamDto;
 import fr.sabb.exception.ValidationException;
 import fr.sabb.data.mapper.SabbMapper;
 import fr.sabb.data.mapper.TeamMapper;
@@ -10,13 +12,15 @@ import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class TeamServiceImpl extends SabbObjectServiceImpl<Team> implements TeamService {
 
 	@Autowired
 	TeamMapper mapper;
+
+	@Autowired
+	TeamConverter converter;
 
 	@Override
 	public SabbMapper<Team> getMapper() {
@@ -36,6 +40,11 @@ public class TeamServiceImpl extends SabbObjectServiceImpl<Team> implements Team
 		return this.getAll().stream().filter(t -> t.getCategory().getId() == idCategory)
 				.filter(t -> t.getSex().equals(sex)).min(Comparator.comparing(Team::getSort))
 				.orElse(null);
+	}
+
+	@Override
+	public List<TeamDto> getAllDto() {
+		return this.getAll().stream().map(converter::convertToTeamDto).toList();
 	}
 
 }

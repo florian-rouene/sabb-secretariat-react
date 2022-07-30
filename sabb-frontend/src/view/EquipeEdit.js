@@ -16,6 +16,7 @@ class EquipeEdit extends Component {
         hasOfficialReferee: false,
         assoName: '',
         categoryId: null,
+        sex: '',
     };
 
     constructor(props) {
@@ -76,7 +77,7 @@ async handleSubmit(event) {
         },
         body: JSON.stringify(item),
     });
-    this.props.history.push('/equipes');
+    this.props.history.push(this.state.cancelLink);
 }
 
     render() {
@@ -100,6 +101,12 @@ async handleSubmit(event) {
                                     return <option value={category.id}>{category.name}</option>;
                                 })
                             }
+                        </Input>
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="select" name="sex" id="sex" value={item.sex || ''} onChange={this.handleChange} autoComplete="sex">
+                             <option value='F'>Féminin</option>
+                             <option value='M'>Masculin</option>
                         </Input>
                     </FormGroup>
                     <FormGroup>

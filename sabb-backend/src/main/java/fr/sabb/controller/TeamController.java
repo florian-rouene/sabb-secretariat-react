@@ -24,13 +24,13 @@ public class TeamController {
     private TeamConverter teamConverter;
 
     @GetMapping
-    public List<Team> getTeams() {
-        return teamService.getAll();
+    public List<TeamDto> getTeams() {
+        return teamService.getAllDto();
     }
 
     @GetMapping("/{id}")
-    public Team getTeam(@PathVariable int id) {
-        return teamService.getById(id).orElseThrow(RuntimeException::new);
+    public TeamDto getTeam(@PathVariable int id) {
+        return teamService.getById(id).map(teamConverter::convertToTeamDto).orElseThrow(RuntimeException::new);
     }
 
     @PutMapping("/{id}")
@@ -43,7 +43,7 @@ public class TeamController {
 
     @PostMapping
     public ResponseEntity createTeam(@RequestBody TeamDto teamDto) throws URISyntaxException, ValidationException {
-        teamService.updateOrInsert(this.teamConverter.convertTeamDto(teamDto));
+        teamService.updateOrInsert(this.teamConverter.convertToTeam(teamDto));
         return ResponseEntity.created(new URI("/equipes/" + teamDto.getId())).body(teamDto);
     }
 

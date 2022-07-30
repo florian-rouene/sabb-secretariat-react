@@ -16,12 +16,20 @@ public class TeamConverter {
     @Autowired
     private CategoryService categoryService;
 
-    public Team convertTeamDto(TeamDto dto) {
-        Team team = new Team();
+    public Team convertToTeam(TeamDto dto) {
 
-        team.setAssociation(this.associationService.getByFfbbName(dto.getAssoName()).orElseThrow());
-        team.setCategory(this.categoryService.getById(dto.getCategoryId()).orElseThrow());
+        dto.setAssociation(this.associationService.getByFfbbName(dto.getAssoName()).orElseThrow());
+        dto.setCategory(this.categoryService.getById(dto.getCategoryId()).orElseThrow());
 
-        return team;
+        return dto;
+    }
+
+    public TeamDto convertToTeamDto(Team team) {
+        TeamDto teamDto = new TeamDto(team);
+
+        teamDto.setCategoryId(team.getCategory().getId());
+        teamDto.setAssoName(team.getAssociation().getName());
+
+        return teamDto;
     }
 }

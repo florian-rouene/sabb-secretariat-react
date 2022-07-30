@@ -1,6 +1,7 @@
 package fr.sabb.service;
 
 
+import fr.sabb.data.dto.TeamDto;
 import fr.sabb.exception.ValidationException;
 
 import java.util.List;
@@ -17,4 +18,5 @@ public interface SabbObjectService<T> {
 	void delete(T t);
 	
 	Optional<T> getById(int id);
+
 }

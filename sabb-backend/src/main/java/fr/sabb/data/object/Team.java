@@ -1,13 +1,14 @@
 package fr.sabb.data.object;
 
 
+import fr.sabb.data.dto.TeamDto;
+
 public class Team extends SabbObject {
 
 	private int id;
 	private String name;
 	private Association association;
 	private Category category;
-	private boolean active;
 	private String ffbbUniqueId;
 	private int sort;
 	private boolean ctc;
@@ -17,7 +18,11 @@ public class Team extends SabbObject {
 	private boolean hasOfficialReferee;
 	
 	private String sex;
-	
+
+	public Team() {
+		super();
+	}
+
 	/**
 	 * @return the id
 	 */
@@ -66,18 +71,7 @@ public class Team extends SabbObject {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-	/**
-	 * @return the active
-	 */
-	public boolean isActive() {
-		return active;
-	}
-	/**
-	 * @param active the active to set
-	 */
-	public void setActive(boolean active) {
-		this.active = active;
-	}
+
 	/**
 	 * @return the ffbbUniqueId
 	 */
