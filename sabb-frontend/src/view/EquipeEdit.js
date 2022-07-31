@@ -16,7 +16,7 @@ class EquipeEdit extends Component {
         hasOfficialReferee: false,
         assoName: '',
         categoryId: null,
-        sex: '',
+        sex: 'F',
     };
 
     constructor(props) {
@@ -104,7 +104,7 @@ async handleSubmit(event) {
                         </Input>
                     </FormGroup>
                     <FormGroup>
-                        <Input type="select" name="sex" id="sex" value={item.sex || ''} onChange={this.handleChange} autoComplete="sex">
+                        <Input type="select" name="sex" id="sex" value={item.sex || 'F'} onChange={this.handleChange} autoComplete="sex">
                              <option value='F'>Féminin</option>
                              <option value='M'>Masculin</option>
                         </Input>

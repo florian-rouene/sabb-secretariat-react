@@ -14,6 +14,7 @@ class Home extends Component {
                     <Button color="link"><Link to="/categories">Categorie</Link></Button>
                     <Button color="link"><Link to="/sub_categories">Sous-Categorie</Link></Button>
                     <Button color="link"><Link to="/equipes">Equipe</Link></Button>                   
+                    <Button color="link"><Link to="/matchs">Match</Link></Button>
                 </Container>
             </div>
         );
