@@ -33,7 +33,7 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
     private TeamService teamService;
 
     @Autowired
-    private OfficialConverter officialConverter;
+    private LicenseeConverter officialConverter;
 
     @Override
     public SabbMapper<Licensee> getMapper() {

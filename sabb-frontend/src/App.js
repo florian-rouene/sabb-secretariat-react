@@ -10,6 +10,7 @@ import EquipeList from './view/EquipeList'
 import FfbbEquipeList from './view/FfbbEquipeList'
 import EquipeEdit from './view/EquipeEdit'
 import MatchList from './view/MatchList'
+import OfficialList from './view/OfficialList'
 import Home from './view/Home'
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
                 <Route path='/equipes/:id' component={EquipeEdit}/>                
                 <Route path='/ffbb_equipes/:ffbbName' exact={true} component={FfbbEquipeList}/>
                 <Route path='/matchs' exact={true} component={MatchList}/>
+                <Route path='/officials' exact={true} component={OfficialList}/>
             </Switch>
         </Router>
     )

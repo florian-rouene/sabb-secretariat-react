@@ -64,11 +64,6 @@ public class OfficialServiceImpl extends SabbObjectServiceImpl<Official> impleme
         super.updateOrInsert(official);
     }
 
-    private void unvalidOfficial(Official official) {
-        official.setMatch(null);
-        this.mapper.update(official);
-    }
-
     @Override
     public int countScoreOfficial(Licensee licensee) {
 

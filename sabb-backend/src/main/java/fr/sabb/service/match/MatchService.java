@@ -18,11 +18,11 @@ public interface MatchService  extends SabbObjectService<Match>{
 	
 	List<Match> getAllExtMatchByTeam(Team team);
 
-	Stream<Match> getAllMatchForCurrentSeasonByWeekOfYear(int year, int weekOfYear);
+	List<Match> getAllMatchByWeekOfYear(int year, int weekOfYear);
 
 	Stream<Match> getAllCTCMatchForCurrentSeasonByWeekOfYear(int year, int weekOfYear);
 	
-	Stream<Match> getAllHomeMainMatchForCurrentSeason();
+	Stream<Match> getAllHomeMainMatch();
 
 	Match getExtRencontreByOpponent(String opponent, Team team);
 }

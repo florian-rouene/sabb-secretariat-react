@@ -56,8 +56,8 @@ public class MatchServiceImpl extends SabbObjectServiceImpl<Match> implements Ma
 	}
 
 	@Override
-	public Stream<Match> getAllMatchForCurrentSeasonByWeekOfYear(int year, int weekOfYear) {
-		return this.getAll().stream().filter(m -> isMatchPlaceDuringWeekend(m, year, weekOfYear));
+	public List<Match> getAllMatchByWeekOfYear(int year, int weekOfYear) {
+		return this.getAll().stream().filter(m -> isMatchPlaceDuringWeekend(m, year, weekOfYear)).toList();
 	}
 
 	@Override
@@ -77,7 +77,7 @@ public class MatchServiceImpl extends SabbObjectServiceImpl<Match> implements Ma
 	}
 
 	@Override
-	public Stream<Match> getAllHomeMainMatchForCurrentSeason() {
+	public Stream<Match> getAllHomeMainMatch() {
 		return this.getAll().stream().filter(Match::isHome).filter(this::playInMainAssociation);
 	}
 	
