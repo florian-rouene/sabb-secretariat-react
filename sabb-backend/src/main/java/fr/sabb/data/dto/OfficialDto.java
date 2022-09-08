@@ -12,6 +12,14 @@ public class OfficialDto extends Official {
     private String opponent;
 
     private Timestamp matchDate;
+    
+    private int licenseeTable1Id;
+    
+    private int licenseeTable2Id;
+    
+    private int licenseeReferee1Id;
+    
+    private int licenseeReferee2Id;
 
     public OfficialDto(Official official) {
         super();
@@ -19,6 +27,10 @@ public class OfficialDto extends Official {
         this.teamId = official.getMatch().getTeam().getId();
         this.opponent = official.getMatch().getOpponent();
         this.matchDate = official.getMatch().getMatchDate();
+        this.licenseeTable1Id = official.getLicenseeTable1().getId();
+        this.licenseeTable2Id = official.getLicenseeTable2().getId();
+        this.licenseeReferee1Id = official.getLicenseeReferee1().getId();
+        this.licenseeReferee2Id = official.getLicenseeReferee2().getId();
     }
 
     public int getTeamId() {
