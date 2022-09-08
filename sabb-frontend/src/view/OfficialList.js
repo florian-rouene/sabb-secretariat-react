@@ -9,7 +9,7 @@ import { v4 as uuid } from 'uuid';
 class OfficialList extends Component {
   constructor(props) {
     super(props);
-    this.state = {officials: [], unfilteredOfficials: [], equipes: []};    
+    this.state = {officials: [], unfilteredOfficials: [], equipes: [], licensees: []};    
     this.filterByTeam = this.filterByTeam.bind(this);
     this.filterByDate = this.filterByDate.bind(this);
 }
@@ -21,6 +21,9 @@ componentDidMount() {
     fetch('/equipes')
         .then(response => response.json())
         .then(data => this.setState({equipes: data}));
+    fetch('/licensees')
+        .then(response => response.json())
+        .then(data => this.setState({licensees: data, unfilteredLicensees: data}));
 }
 
 

@@ -56,4 +56,36 @@ public class OfficialDto extends Official {
     public void setMatchDate(Timestamp matchDate) {
         this.matchDate = matchDate;
     }
+
+    public int getLicenseeTable1Id() {
+        return licenseeTable1Id;
+    }
+
+    public void setLicenseeTable1Id(int licenseeTable1Id) {
+        this.licenseeTable1Id = licenseeTable1Id;
+    }
+
+    public int getLicenseeTable2Id() {
+        return licenseeTable2Id;
+    }
+
+    public void setLicenseeTable2Id(int licenseeTable2Id) {
+        this.licenseeTable2Id = licenseeTable2Id;
+    }
+
+    public int getLicenseeReferee1Id() {
+        return licenseeReferee1Id;
+    }
+
+    public void setLicenseeReferee1Id(int licenseeReferee1Id) {
+        this.licenseeReferee1Id = licenseeReferee1Id;
+    }
+
+    public int getLicenseeReferee2Id() {
+        return licenseeReferee2Id;
+    }
+
+    public void setLicenseeReferee2Id(int licenseeReferee2Id) {
+        this.licenseeReferee2Id = licenseeReferee2Id;
+    }
 }

@@ -9,10 +9,12 @@ import fr.sabb.service.category.CategoryService;
 import fr.sabb.service.team.TeamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -33,7 +35,7 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
     private TeamService teamService;
 
     @Autowired
-    private LicenseeConverter officialConverter;
+    private OfficialLicenseeConverter officialConverter;
 
     @Override
     public SabbMapper<Licensee> getMapper() {
@@ -43,6 +45,16 @@ public class LicenseeServiceImpl extends SabbObjectServiceImpl<Licensee> impleme
     @Override
     public void fillDBWithCsvFile(Association association, String fileName) {
         try (BufferedReader bufferReader = new BufferedReader(new FileReader(fileName))) {
+            bufferReader.lines().filter(s -> !s.isEmpty() && !s.startsWith(";") && !s.contains("cd_org"))
+                    .forEach(l -> readLicenseeLine(l, association));
+        } catch (IOException ex) {
+            System.out.println("problème lors du parsage");
+        }
+    }
+
+    @Override
+    public void fillDBWithCsvFile(Association association, MultipartFile file) {
+        try (BufferedReader bufferReader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
             bufferReader.lines().filter(s -> !s.isEmpty() && !s.startsWith(";") && !s.contains("cd_org"))
                     .forEach(l -> readLicenseeLine(l, association));
         } catch (IOException ex) {
