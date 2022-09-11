@@ -19,6 +19,12 @@ public class Official extends SabbObject {
 		super();
 		this.match = match;
 	}
+
+	public Official(int matchId) {
+		super();
+		this.match = new Match(matchId);
+	}
+
 	/**
 	 * @return the id
 	 */

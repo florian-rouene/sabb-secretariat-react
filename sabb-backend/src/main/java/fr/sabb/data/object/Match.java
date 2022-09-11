@@ -11,7 +11,15 @@ public class Match extends SabbObject {
 	private boolean home;
 	private boolean locationSwitched;
 
-	/**
+	public Match() {
+		super();
+	}
+    public Match(int matchId) {
+        super();
+		this.id = matchId;
+    }
+
+    /**
 	 * @return the id
 	 */
 	public int getId() {

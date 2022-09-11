@@ -5,6 +5,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import DateObject from "react-date-object";
 import { v4 as uuid } from 'uuid';
+import LicenseesPopover from './component/LicenseesPopover';
 
 class OfficialList extends Component {
   constructor(props) {
@@ -51,6 +52,7 @@ render() {
             <td style={{whiteSpace: 'nowrap'}}>{this.state.equipes.filter(e => e.id === official.teamId).map(e => e.name)}</td>
             <td>{official.opponent}</td>
             <td>{official.matchDate}</td>
+            <td><span>{official.licenseeTable1Id}</span><LicenseesPopover match={official.match} licensees={this.state.licensees} equipes={this.state.equipes}/></td>
             </tr>
     });
 
@@ -73,9 +75,10 @@ render() {
                 <Table className="mt-4">
                     <thead>
                     <tr>
-                        <th width="30%">Equipe</th>
-                        <th width="30%">Adversaire</th>
-                        <th width="40%">Date</th>
+                        <th width="10%">Equipe</th>
+                        <th width="20%">Adversaire</th>
+                        <th width="20%">Date</th>
+                        <th width="50%">Officiel</th>
                     </tr>
                     </thead>
                     <tbody>

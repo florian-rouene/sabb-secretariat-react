@@ -43,12 +43,7 @@ public class LicenseeController {
         }
 
         licenseeService.fillDBWithCsvFile(associationService.getAllActive().stream().filter(Association::isMain).findFirst().orElseThrow(),file);
-        InputStream inputStream = file.getInputStream();
         String originalName = file.getOriginalFilename();
-        String name = file.getName();
-        String contentType = file.getContentType();
-        long size = file.getSize();
-        // Do processing with uploaded file data in Service layer
         return new ResponseEntity<String>(originalName, HttpStatus.OK);
     }
 }

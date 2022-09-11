@@ -8,7 +8,9 @@ import fr.sabb.service.SabbObjectService;
 public interface OfficialService  extends SabbObjectService<Official>{
 
 	Official getOfficialFromMatch(Match match);
-	
+
+	Official getOfficialFromMatchId(int matchId);
+
 	int countLicenseeOfficialNumber(Licensee licensee);
 	
 	int countScoreOfficial(Licensee licensee);

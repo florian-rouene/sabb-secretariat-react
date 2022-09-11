@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Button, Input, Container, Table } from 'reactstrap';
+import {  Button, ButtonGroup, Input, Container, Table } from 'reactstrap';
 import AppNavbar from './AppNavbar';
 import 'react-calendar/dist/Calendar.css';
 import { v4 as uuid } from 'uuid';
+import { Link } from 'react-router-dom';
 
 class LicenseeList extends Component {
   constructor(props) {
@@ -52,6 +53,19 @@ onFileChangeHandler = (e) => {
     });
 };
 
+async remove(id) {
+    await fetch(`/licensee/${id}`, {
+        method: 'DELETE',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    }).then(() => {
+        let updatedLicensees = [...this.state.licensees].filter(i => i.id !== id);
+        this.setState({licensees: updatedLicensees});
+    });
+}
+
 render() {
     const {licensees} = this.state;
 
@@ -61,6 +75,12 @@ render() {
             <td>{licensee.name}</td>
             <td>{licensee.firstname}</td>
             <td style={{whiteSpace: 'nowrap'}}>{this.state.equipes.filter(e => e.id === licensee.teamId).map(e => e.name)}</td>
+            <td>
+                <ButtonGroup>
+                    <Button size="sm" color="primary" tag={Link} to={"/licensee/" + licensee.id}>Edit</Button>
+                    <Button size="sm" color="danger" onClick={() => this.remove(licensee.id)}>Delete</Button>
+                </ButtonGroup>
+            </td>
             </tr>
     });
 
@@ -84,10 +104,11 @@ render() {
                 <Table className="mt-4">
                     <thead>
                     <tr>
-                        <th width="30%">Num licence</th>
+                        <th width="20%">Num licence</th>
                         <th width="30%">Nom</th>
                         <th width="20%">Prénom</th>
                         <th width="20%">Equipe</th>
+                        <th width="10%">Action</th>
                     </tr>
                     </thead>
                     <tbody>

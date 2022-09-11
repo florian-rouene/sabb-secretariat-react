@@ -17,7 +17,15 @@ public class Licensee extends SabbObject {
 	private String sex;
 	private Association association;
 
-	/**
+	public Licensee() {
+		super();
+	}
+    public Licensee(int licenseeReferee1Id) {
+        super();
+		this.id = licenseeReferee1Id;
+    }
+
+    /**
 	 * @return the id
 	 */
 	public int getId() {

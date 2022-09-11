@@ -12,6 +12,7 @@ import EquipeEdit from './view/EquipeEdit'
 import MatchList from './view/MatchList'
 import OfficialList from './view/OfficialList'
 import LicenseeList from './view/LicenseeList'
+import LicenseeEdit from './view/LicenseeEdit'
 import Home from './view/Home'
 
 class App extends Component {
@@ -33,6 +34,7 @@ class App extends Component {
                 <Route path='/matchs' exact={true} component={MatchList}/>
                 <Route path='/officials' exact={true} component={OfficialList}/>
                 <Route path='/licensees' exact={true} component={LicenseeList}/>
+                <Route path='/licensees/:id' exact={true} component={LicenseeEdit}/>
             </Switch>
         </Router>
     )

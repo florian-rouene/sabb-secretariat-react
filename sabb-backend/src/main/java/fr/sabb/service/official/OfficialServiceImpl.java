@@ -39,6 +39,12 @@ public class OfficialServiceImpl extends SabbObjectServiceImpl<Official> impleme
     }
 
     @Override
+    public Official getOfficialFromMatchId(int matchId) {
+        return this.getAll().stream().filter(o -> o.getMatch().getId() == matchId).findFirst()
+                .orElse(new Official(matchId));
+    }
+
+    @Override
     public int countLicenseeOfficialNumber(Licensee licensee) {
         return getAllWithCaching().stream().filter(o -> isLicenseeOfficie(o, licensee)).toList()
                 .size();

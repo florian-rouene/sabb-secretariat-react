@@ -5,6 +5,8 @@ import fr.sabb.data.object.Team;
 
 import java.sql.Timestamp;
 
+import static java.util.Objects.isNull;
+
 public class OfficialDto extends Official {
 
     private int teamId;
@@ -21,16 +23,21 @@ public class OfficialDto extends Official {
     
     private int licenseeReferee2Id;
 
+    public OfficialDto() {
+        super();
+    }
+
     public OfficialDto(Official official) {
         super();
         super.setId(official.getId());
+        super.setMatch(official.getMatch());
         this.teamId = official.getMatch().getTeam().getId();
         this.opponent = official.getMatch().getOpponent();
         this.matchDate = official.getMatch().getMatchDate();
-        this.licenseeTable1Id = official.getLicenseeTable1().getId();
-        this.licenseeTable2Id = official.getLicenseeTable2().getId();
-        this.licenseeReferee1Id = official.getLicenseeReferee1().getId();
-        this.licenseeReferee2Id = official.getLicenseeReferee2().getId();
+        this.licenseeTable1Id = isNull(official.getLicenseeTable1()) ? 0 : official.getLicenseeTable1().getId();
+        this.licenseeTable2Id = isNull(official.getLicenseeTable2()) ? 0 : official.getLicenseeTable2().getId();
+        this.licenseeReferee1Id = isNull(official.getLicenseeReferee1()) ? 0 : official.getLicenseeReferee1().getId();
+        this.licenseeReferee2Id = isNull(official.getLicenseeReferee2()) ? 0 : official.getLicenseeReferee2().getId();
     }
 
     public int getTeamId() {
